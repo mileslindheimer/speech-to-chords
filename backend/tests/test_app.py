@@ -36,10 +36,10 @@ class TestExtractChords:
     
     def test_extract_chords_with_sharps_flats(self):
         """Test extraction of chords with sharps and flats"""
-        text = "F#m and Bb are in the key"
+        text = "F#m and B flat are in the key"
         chords = extract_chords(text)
-        assert 'F#m' in chords or 'F#m' in [c.lower() for c in chords]
-        assert 'Bb' in chords or 'bb' in [c.lower() for c in chords]
+        assert 'F#m' in chords
+        assert 'Bb' in chords
     
     def test_extract_extended_chords(self):
         """Test extraction of extended chords"""
@@ -94,9 +94,16 @@ class TestExtractChords:
     
     def test_complex_chord_names(self):
         """Test extraction of complex chord names"""
-        text = "Cadd9, Ddim7, Eaug, Fmaj7"
+        text = "Cadd9, Ddim7, Eaug, F major 7"
         chords = extract_chords(text)
-        assert len(chords) > 0
+        assert chords == ["Cadd9", "Ddim7", "Eaug", "Fmaj7"]
+    
+    def test_spoken_variations(self):
+        """Test extraction of spoken variations of chord names"""
+        text = "B-flat minor, C-major 7."
+        chords = extract_chords(text)
+        assert chords == ["Bbm", "Cmaj7"]
+
     
     def test_chords_in_sentence_context(self):
         """Test extraction when chords are in full sentences"""
