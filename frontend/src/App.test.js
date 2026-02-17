@@ -229,7 +229,7 @@ describe('App Component', () => {
       }, { timeout: 3000 });
 
       // Verify API was called correctly
-      expect(global.fetch).toHaveBeenCalledWith('/transcribe', {
+      expect(global.fetch).toHaveBeenCalledWith('transcribe', {
         method: 'POST',
         body: expect.any(FormData)
       });
