@@ -572,9 +572,22 @@ describe('App Component', () => {
       expect(screen.getByText(/💾 Save Chart/)).toBeInTheDocument();
       fireEvent.click(screen.getByText(/💾 Save Chart/));
 
+      // Check that the save confirmation overlay appears
+      await waitFor(() => {
+        expect(screen.getByText(/Chart saved successfully/i)).toBeInTheDocument();
+      });
+
       const saved = JSON.parse(localStorage.getItem('savedCharts'));
       expect(saved).toHaveLength(1);
       expect(saved[0].chordChart).toBe('chart contents');
+
+      // Check that the overlay disappears after 2 seconds
+      await waitFor(
+        () => {
+          expect(screen.queryByText(/Chart saved successfully/i)).not.toBeInTheDocument();
+        },
+        { timeout: 3000 }
+      );
     });
 
     it('navigates to saved page and displays saved charts', async () => {

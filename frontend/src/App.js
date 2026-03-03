@@ -61,6 +61,7 @@ function HomePage({ saveChart }) {
   const [transcription, setTranscription] = useState('');
   const [chords, setChords] = useState([]);
   const [error, setError] = useState('');
+  const [showSaveConfirm, setShowSaveConfirm] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
@@ -154,6 +155,9 @@ function HomePage({ saveChart }) {
   const handleSave = () => {
     if (chordChart) {
       saveChart({ transcription, chords, chordChart, timestamp: Date.now() });
+      setShowSaveConfirm(true);
+      // Auto-dismiss after 2 seconds
+      setTimeout(() => setShowSaveConfirm(false), 2000);
     }
   };
 
@@ -232,6 +236,11 @@ function HomePage({ saveChart }) {
                 💾 Save Chart
               </button>
             )}
+          </div>
+        )}
+        {showSaveConfirm && (
+          <div className="save-overlay">
+            <div className="save-message">✅ Chart saved successfully!</div>
           </div>
         )}
       </div>
