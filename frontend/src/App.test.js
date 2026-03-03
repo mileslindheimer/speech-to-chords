@@ -547,4 +547,45 @@ describe('App Component', () => {
       }, { timeout: 3000 });
     });
   });
+
+  describe('Saving and Navigation', () => {
+    beforeEach(() => {
+      localStorage.clear();
+    });
+
+    it('shows save button after transcription and can save', async () => {
+      render(<App />);
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          transcription: 'hello world',
+          chords: ['C', 'G'],
+          chord_chart: 'chart contents'
+        })
+      });
+
+      fireEvent.click(screen.getByText(/Start Recording/i));
+      await waitFor(() => expect(screen.getByText(/Stop Recording/i)).toBeInTheDocument());
+      fireEvent.click(screen.getByText(/Stop Recording/i));
+
+      await waitFor(() => screen.getByText(/Chord Chart/i));
+      expect(screen.getByText(/💾 Save Chart/)).toBeInTheDocument();
+      fireEvent.click(screen.getByText(/💾 Save Chart/));
+
+      const saved = JSON.parse(localStorage.getItem('savedCharts'));
+      expect(saved).toHaveLength(1);
+      expect(saved[0].chordChart).toBe('chart contents');
+    });
+
+    it('navigates to saved page and displays saved charts', async () => {
+      localStorage.setItem('savedCharts', JSON.stringify([
+        { transcription: '', chords: [], chordChart: 'foo', timestamp: Date.now() }
+      ]));
+
+      render(<App />);
+      fireEvent.click(screen.getByText(/Saved Charts/));
+      await waitFor(() => screen.getByText(/Saved Chord Charts/i));
+      expect(screen.getByText(/foo/)).toBeInTheDocument();
+    });
+  });
 });
