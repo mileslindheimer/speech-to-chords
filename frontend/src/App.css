@@ -14,6 +14,23 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
+.navbar {
+  background: #667eea;
+  padding: 10px 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
 h1 {
   color: #333;
   text-align: center;
@@ -145,6 +162,46 @@ h1 {
   box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
 }
 
+.save-button {
+  padding: 10px 20px;
+  background: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.save-button:hover {
+  background: #38a169;
+}
+
+.delete-button {
+  padding: 5px 10px;
+  background: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-left: 10px;
+}
+
+.delete-button:hover {
+  background: #c53030;
+}
+
+.saved-chart {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #e9ecef;
+}
+
 .copy-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
@@ -212,6 +269,49 @@ h1 {
   padding: 15px;
   border-radius: 10px;
   border: 1px solid #ddd;
+}
+
+.save-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.save-message {
+  background: white;
+  padding: 30px 50px;
+  border-radius: 15px;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 @media (max-width: 600px) {
